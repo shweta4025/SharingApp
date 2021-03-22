@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALL SHARE</title>
+    
+    
+    <style>
+        body,html{
+    font-family: system-ui;
+    background:rgb(236, 248, 248);
+    height:100%;
+    padding:0;
+    margin:0;
+}
+
+body, .dropzone, .container{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.container{
+    background:cornsilk;
+    border-radius:15px;
+    box-shadow: 20px 20px 10px rgb(70, 69, 69) ;
+}
+
+.dropzone{
+    width:500px ;
+    min-height:200px;
+    border : 3px solid rgb(15, 168, 41);
+    margin:40px;
+    border-radius:10px;
+    transition: transform 1s;
+}
+
+.icon-container img{
+        width:75px;
+        position:absolute;
+        transition: transform 1s;
+}
+
+.icon-container #img2{
+    z-index:2;
+    width:75px;
+    
+}
+ .icon-container{
+    width:80px;
+    height: 100px;
+    position:relative;
+    
+}
+
+.dragged.dropzone {
+    background-color: cornsilk;
+}
+
+.dragged .icon-container #img1{
+        transform:rotate(10deg) translateX(10px) scale(0.88);
+        transform-origin: bottom;
+}
+.dragged .icon-container #img3{
+    transform:rotate(-10deg) translateX(-10px) scale(0.88);
+    transform-origin: bottom;
+}
+.dragged .icon-container #img2{
+    transform:translateY(-5px) scale(0.88);
+}
+
+#fileinput{
+    display:none;
+}
+
+.search{
+    color:rgb(15, 168, 41);
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.progress-container{
+    width:500px;
+    height:70px;
+    border: 2px solid rgb(15, 168, 41);
+    margin-bottom: 25px;
+    border-radius: 10px;
+    position: relative;
+   display:none;
+}
+
+.progress-container .bg-progress{
+    
+    width:25%;
+    height:100%;
+    background-color: cornsilk;
+    border-radius: 10%;
+    transform-origin: left;
+    transition: width .25s linear;
+    position: absolute;
+    
+    
+}
+.progress-container .inner-container{
+position: absolute;
+z-index: 1;
+margin: 10px 15px;
+width:470px;
+}
+
+.percent-container{
+    font-size: 13px;
+    margin:5px;
+    opacity: 0.8;
+}
+
+.progress-bar{
+    height:4px;
+    width:100%;
+    background-color: rgb(163, 231, 174);
+    border-radius: 2px;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform .25s linear;
+}
+.sharing-container{
+    width:500px;
+    margin-bottom: 10px;
+    display : none;
+}
+
+p{
+    opacity: 0.7;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+.sharing-container .input-container input{
+width:500px;
+border: 2px dashed rgb(15, 168, 41);
+border-radius: 6px;
+padding:10px 15px;
+box-sizing: border-box;
+font-size: 20px;
+background: rgb(192, 229, 200);
+color:black;
+}
+
+#email-send{
+    width: 150px;
+    height: 30px;
+    text-align: center;
+    font-size: 18px;
+    padding: 8px 40px;
+    margin-left: 130px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    background-color: rgb(85, 209, 105);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.email-container{
+    display:flex;
+    align-items: center;
+    display: none;
+}
+.email-container form{
+    width:100%;
+    border: 2px solid rgb(15, 168, 41);
+    border-radius: 10px;
+    padding:15px;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.email-container .field{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    width:400px;
+}
+.email-container label{
+    font-size: 18px;
+}
+.email-container input{
+    font-size: 18px;
+    border:none;
+    border-bottom: 2px solid rgb(15, 168, 41);
+    text-align: center;
+}
+.email-container input:focus{
+    outline:none;
+}
+.email-container button{
+    font-size: 18px;
+    padding: 8px 40px;
+    margin-top: 15px;
+    background-color: rgb(85, 209, 105);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="dropzone">
+            <div class="icon-container">
+                <img src="data:image/png;base64,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" id="img1" alt="files icon" draggable="false">
+                <img src="data:image/png;base64,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" id="img2" alt="files icon" draggable="false">
+                <img src="data:image/png;base64,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" id="img3" alt="files icon" draggable="false">
+
+            </div>
+            <input type="file" id="fileinput">
+            <div class="paragraph">Drop Your Things Here,  <span class="search">SELECT FILE</span></div>
+        </div>
+
+        <div class="progress-container">
+            <div class="bg-progress"> </div>
+            <div class="inner-container">
+                 <div class="title">Uploading...</div>
+                <div class="percent-container"><span id="percent">0</span>%</div>
+                <div class="progress-bar"></div>
+            </div>
+            
+         </div>
+         <div class="sharing-container">
+             <p class="expire">This link will expire in 24 hrs</p>
+             <div class="input-container">
+                 <input type="text" id="fileURL" readonly>
+             </div>
+             <div id="email-send">SEND VIA EMAIL</div>
+             <div class="email-container">
+                 <form id="email-form">
+                     <div class="field">
+                         <label for="sender">Your E-mail</label>
+                         <input type="email" required name="from-email" id="sender">
+                     </div>
+                     <div class="field">
+                        <label for="reciever">Reciever E-mail</label>
+                        <input type="email" required name="to-email" id="reciever">
+                    </div>
+                    <button type="submit">SEND</button>
+                 </form>
+             </div>
+         </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
