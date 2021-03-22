@@ -109,7 +109,7 @@ emailSend.addEventListener('click',()=>{
         emailContainer.style.display = "block";
 })
 
-fileURL.value = url;
+fileURL.value = "A unique url will be same when connected to backend server";
 }
 
 emailForm.addEventListener('submit',(e)=>{
